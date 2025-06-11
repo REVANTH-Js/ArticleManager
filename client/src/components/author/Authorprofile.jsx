@@ -18,7 +18,7 @@ function Authorprofile() {
       </div>
       
     </div>
-  )
+  );
 }
 
 export default Authorprofile

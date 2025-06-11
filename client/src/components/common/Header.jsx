@@ -12,6 +12,7 @@ const navigate=useNavigate()
 
 async  function handlesignout(){
     await signOut()
+    localStorage.removeItem("currentuser");
     setcurrentuser(null)
     navigate('/')
 }

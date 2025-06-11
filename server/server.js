@@ -4,7 +4,10 @@ const adminApp=require("./API/adminApi")
 const authorApp=require("./API/authorApi")
 const cors=require('cors');
 const app=exp();
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:5173', // or whatever port your frontend runs on
+    credentials: true
+  }));
 require('dotenv').config(); //process.env
 
 const port=process.env.PORT || 4000;

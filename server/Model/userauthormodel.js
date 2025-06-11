@@ -10,7 +10,7 @@ const userAutherSchema=new mongoose.Schema({
     required:true,
  },lastName:{
     type:String,
-    required:true,
+   //  required:true,
  },
  
  email:{

@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react'
-// import { userAuthorContextObj } from '../../contexts/UserAuthorContext'
 import { userauthorcontextobj } from '../../contexts/UserAuthorcontext'
 import { useUser } from '@clerk/clerk-react'
 import axios from 'axios'
@@ -13,7 +12,7 @@ function Home() {
   const navigate = useNavigate();
 
   // console.log("isSignedIn :", isSignedIn)
-   console.log("User :", user)
+   console.log("User isss :", user)
   // console.log("isLolded :", isLoaded)
 
 
@@ -22,9 +21,9 @@ function Home() {
     //clear error property
     setError('')
     const selectedRole = e.target.value;
-    console.log(selectedRole),
+    // console.log(selectedRole),
     currentuser.role = selectedRole
-    // console.log(currentuser.role)
+    console.log(currentuser.role)
 
 
     let res = null;
@@ -37,9 +36,15 @@ function Home() {
           setcurrentuser({ ...currentuser, ...payload })
           //save user to localstorage
           localStorage.setItem("currentuser",JSON.stringify(payload))
-          // setError(null)
+          navigate(`/author-profile/${payload.email}/articles`);
+          
+
+
         } else {
           setError(message);
+          setcurrentuser({});
+          localStorage.removeItem("currentuser");
+          return;
         }
       }
       if (selectedRole === 'user') {
@@ -51,12 +56,18 @@ function Home() {
           setcurrentuser({ ...currentuser, ...payload })
            //save user to localstorage
            localStorage.setItem("currentuser",JSON.stringify(payload))
+          
+      
         } else {
           setError(message);
+          setcurrentuser({});
+          localStorage.removeItem("currentuser");
         }
       }
     } catch (err) {
       setError(err.message);
+      setcurrentuser({});
+      localStorage.removeItem("currentuser");
     }
   }
 
@@ -76,20 +87,23 @@ function Home() {
 
 
   useEffect(() => {
-
+    console.log("useEffect ran", { currentuser, isSignedIn, error }); 
+    if (!isSignedIn) return; 
     if (currentuser?.role === "user" && error.length === 0) {
       console.log("user")
-
       navigate(`/user-profile/${currentuser.email}/articles`);
+
+     
     }
     if (currentuser?.role === "author" && error.length === 0) {
-      console.log("author")
+      console.log('......../author-profile/' + currentuser.email + '/articles');
+      console.log('i came up to hereeee')
       navigate(`/author-profile/${currentuser.email}/articles`);
-    }
-  }, [currentuser]);
 
-  // console.log("cu",currentUser)
-  //console.log("is loaded",isLoaded)
+    }
+  }, [currentuser, isSignedIn, error]);
+
+
 
   return (
     <div className='container'>

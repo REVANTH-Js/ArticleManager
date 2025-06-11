@@ -128,7 +128,7 @@ const Routerobj = createBrowserRouter(
         { path: 'signin', element: <Signin /> },
         { path: 'signup', element: <Signup /> },
         {
-          path: 'user-profile/:email',
+          path: 'user-profile/:email/*',
           element: <Userprofile />,
           children: [
             { path: 'articles', element: <Articles /> },
